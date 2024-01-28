@@ -10,4 +10,25 @@ export class ApiService {
       params: { email, password },
     })
   }
+
+  static async createAccount({
+    orderNumber,
+    email,
+    password,
+  }: {
+    orderNumber: String
+    email: String
+    password: String
+  }) {
+    return axios.request({
+      method: 'post',
+      baseURL,
+      url: '/users/create',
+      data: {
+        orderNumber,
+        email,
+        password,
+      },
+    })
+  }
 }
