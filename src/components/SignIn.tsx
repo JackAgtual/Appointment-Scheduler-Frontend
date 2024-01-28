@@ -1,34 +1,67 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { ApiService } from '../services/apiService'
 
 function SignIn() {
-  const formRef = useRef<null | HTMLFormElement>(null)
+  const emailRef = useRef<null | HTMLInputElement>(null)
+  const passwordRef = useRef<null | HTMLInputElement>(null)
+
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+  })
+
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const { name, value } = e.target
+
+    emailRef.current?.setCustomValidity('')
+    passwordRef.current?.setCustomValidity('')
+
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }))
+  }
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    const form = formRef.current
-    if (form === null) return
 
-    const email = form.email.value
-    const password = form.password.value
+    if (emailRef.current === null || passwordRef.current === null) return
+
+    const { email, password } = formData
+
     try {
       const res = await ApiService.signIn({ email, password })
-      console.log(res.data)
-    } catch (error: any) {
-      if (error.response && error.response.data && error.response.data.message) {
-        console.log(error.response.data.message)
+      if (res.status === 200) {
+        console.log('valid credentials')
       }
+    } catch (error: any) {
+      const validityMessage =
+        error.response?.data?.message !== undefined
+          ? error.response.data.message
+          : 'Something went wrong'
+
+      const invalidElement =
+        error.response?.data?.invalidInput === 'email'
+          ? emailRef.current
+          : passwordRef.current
+
+      invalidElement.setCustomValidity(validityMessage)
+      invalidElement.reportValidity()
     }
   }
   return (
     <div className="border-2 rounded-sm px-3 py-4 mx-4">
       <h1>Sign in</h1>
-      <form ref={formRef} className="flex flex-col space-y-2" onSubmit={handleSubmit}>
+      <form className="flex flex-col space-y-2" onSubmit={handleSubmit}>
         <div className="flex flex-col">
           <label htmlFor="email">Email</label>
           <input
+            ref={emailRef}
+            onChange={handleChange}
+            required={true}
             className="border-2 rounded-sm px-2"
             id="email"
+            name="email"
             type="email"
             placeholder="youremail@gmail.com"
             autoComplete="username"
@@ -37,8 +70,12 @@ function SignIn() {
         <div className="flex flex-col">
           <label htmlFor="password">Password</label>
           <input
+            ref={passwordRef}
+            onChange={handleChange}
+            required={true}
             className="border-2 rounded-sm px-2"
             id="password"
+            name="password"
             type="password"
             autoComplete="current-password"
           />
