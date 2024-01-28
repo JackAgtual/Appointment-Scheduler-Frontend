@@ -1,7 +1,9 @@
+import SignIn from './components/SignIn'
+
 function App() {
   return (
     <>
-      <div>Appointment Scheduler</div>
+      <SignIn />
     </>
   )
 }
