@@ -1,5 +1,6 @@
 import { useState, useRef } from 'react'
 import { ApiService } from '../services/apiService'
+import NavigateLink from './NavigateLink'
 
 function CreateAccount() {
   const [formData, setFormData] = useState({
@@ -45,7 +46,7 @@ function CreateAccount() {
   return (
     <div className="border-2 rounded-sm px-3 py-4 mx-4">
       <h1>Create account</h1>
-      <form className="flex flex-col space-y-2" onSubmit={handleSubmit}>
+      <form className="flex flex-col space-y-2 py-4" onSubmit={handleSubmit}>
         <div className="flex flex-col">
           <label htmlFor="email">Order number</label>
           <input
@@ -88,6 +89,10 @@ function CreateAccount() {
           Create account
         </button>
       </form>
+      <p className="text-center">
+        <span>Already have an account? </span>
+        <NavigateLink navigateTo="/">Sign in</NavigateLink>.
+      </p>
     </div>
   )
 }

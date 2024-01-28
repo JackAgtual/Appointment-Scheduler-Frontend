@@ -2,7 +2,7 @@ import axios from 'axios'
 const baseURL = import.meta.env.VITE_BACKEND_BASE_URL
 
 export class ApiService {
-  static async signIn({ email, password }: { email: String; password: String }) {
+  static async signIn({ email, password }: { email: string; password: string }) {
     return axios.request({
       method: 'get',
       baseURL,
@@ -16,9 +16,9 @@ export class ApiService {
     email,
     password,
   }: {
-    orderNumber: String
-    email: String
-    password: String
+    orderNumber: string
+    email: string
+    password: string
   }) {
     return axios.request({
       method: 'post',

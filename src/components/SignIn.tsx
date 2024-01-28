@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react'
 import { ApiService } from '../services/apiService'
+import NavigateLink from './NavigateLink'
 
 function SignIn() {
   const emailRef = useRef<null | HTMLInputElement>(null)
@@ -52,7 +53,7 @@ function SignIn() {
   return (
     <div className="border-2 rounded-sm px-3 py-4 mx-4">
       <h1>Sign in</h1>
-      <form className="flex flex-col space-y-2" onSubmit={handleSubmit}>
+      <form className="flex flex-col space-y-2 py-4" onSubmit={handleSubmit}>
         <div className="flex flex-col">
           <label htmlFor="email">Email</label>
           <input
@@ -84,6 +85,10 @@ function SignIn() {
           Sign in
         </button>
       </form>
+      <p className="text-center">
+        <span>Don't have an account? </span>
+        <NavigateLink navigateTo="/create-account">Create an account</NavigateLink>.
+      </p>
     </div>
   )
 }
