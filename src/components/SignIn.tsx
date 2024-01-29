@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { ApiService } from '../services/apiService'
 import NavigateLink from './NavigateLink'
 
@@ -8,6 +9,7 @@ type SignInProps = {
 }
 
 function SignIn({ setEmail, setPassword }: SignInProps) {
+  const navigate = useNavigate()
   const emailRef = useRef<null | HTMLInputElement>(null)
   const passwordRef = useRef<null | HTMLInputElement>(null)
 
@@ -40,6 +42,7 @@ function SignIn({ setEmail, setPassword }: SignInProps) {
       if (res.status === 200) {
         setEmail(email)
         setPassword(password)
+        navigate('/dashboard')
       }
     } catch (error: any) {
       const validityMessage =

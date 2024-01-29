@@ -1,4 +1,5 @@
 import { useState, useRef } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { ApiService } from '../services/apiService'
 import NavigateLink from './NavigateLink'
 
@@ -8,6 +9,7 @@ type CreateAccountProps = {
 }
 
 function CreateAccount({ setEmail, setPassword }: CreateAccountProps) {
+  const navigate = useNavigate()
   const [formData, setFormData] = useState({
     orderNumber: '',
     email: '',
@@ -37,6 +39,7 @@ function CreateAccount({ setEmail, setPassword }: CreateAccountProps) {
       if (res.status === 201) {
         setEmail(formData.email)
         setPassword(formData.password)
+        navigate('/dashboard')
       }
     } catch (error: any) {
       const validationMessage =

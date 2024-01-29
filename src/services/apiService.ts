@@ -31,4 +31,16 @@ export class ApiService {
       },
     })
   }
+
+  static async getLogs({ email, password }: { email: string; password: string }) {
+    return axios.request({
+      method: 'get',
+      baseURL,
+      url: '/logs',
+      params: {
+        email,
+        password,
+      },
+    })
+  }
 }
