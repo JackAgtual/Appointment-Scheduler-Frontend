@@ -24,7 +24,7 @@ jobs:
   # Single deploy job since we're just deploying
   deploy:
     env:
-    VITE_BACKEND_BASE_URL: ${{ secrets.VITE_BACKEND_BASE_URL }}
+      VITE_BACKEND_BASE_URL: ${{ secrets.VITE_BACKEND_BASE_URL }}
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
