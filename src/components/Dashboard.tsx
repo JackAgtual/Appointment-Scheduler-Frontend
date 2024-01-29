@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { ApiService } from '../services/apiService'
 import { Log } from '../types/logTypes'
+import LogTable from './LogTable'
 
 type DashboardProps = {
   email: string
@@ -34,7 +35,12 @@ function Dashboard({ email, password }: DashboardProps) {
     }
   }, [])
 
-  return <div>Dashboard</div>
+  return (
+    <div>
+      <h1 className="text-xl py-4">Log history</h1>
+      <LogTable logs={logs} />
+    </div>
+  )
 }
 
 export default Dashboard
