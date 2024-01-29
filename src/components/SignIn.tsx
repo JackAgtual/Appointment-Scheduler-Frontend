@@ -2,7 +2,12 @@ import { useRef, useState } from 'react'
 import { ApiService } from '../services/apiService'
 import NavigateLink from './NavigateLink'
 
-function SignIn() {
+type SignInProps = {
+  setEmail: React.Dispatch<React.SetStateAction<string>>
+  setPassword: React.Dispatch<React.SetStateAction<string>>
+}
+
+function SignIn({ setEmail, setPassword }: SignInProps) {
   const emailRef = useRef<null | HTMLInputElement>(null)
   const passwordRef = useRef<null | HTMLInputElement>(null)
 
@@ -33,7 +38,8 @@ function SignIn() {
     try {
       const res = await ApiService.signIn({ email, password })
       if (res.status === 200) {
-        console.log('valid credentials')
+        setEmail(email)
+        setPassword(password)
       }
     } catch (error: any) {
       const validityMessage =
@@ -48,6 +54,9 @@ function SignIn() {
 
       invalidElement.setCustomValidity(validityMessage)
       invalidElement.reportValidity()
+
+      setEmail('')
+      setPassword('')
     }
   }
   return (

@@ -2,7 +2,12 @@ import { useState, useRef } from 'react'
 import { ApiService } from '../services/apiService'
 import NavigateLink from './NavigateLink'
 
-function CreateAccount() {
+type CreateAccountProps = {
+  setEmail: React.Dispatch<React.SetStateAction<string>>
+  setPassword: React.Dispatch<React.SetStateAction<string>>
+}
+
+function CreateAccount({ setEmail, setPassword }: CreateAccountProps) {
   const [formData, setFormData] = useState({
     orderNumber: '',
     email: '',
@@ -30,7 +35,8 @@ function CreateAccount() {
     try {
       const res = await ApiService.createAccount(formData)
       if (res.status === 201) {
-        console.log('Account created')
+        setEmail(formData.email)
+        setPassword(formData.password)
       }
     } catch (error: any) {
       const validationMessage =
@@ -40,6 +46,9 @@ function CreateAccount() {
 
       emailRef.current.setCustomValidity(validationMessage)
       emailRef.current.reportValidity()
+
+      setEmail('')
+      setPassword('')
     }
   }
 
