@@ -1,8 +1,10 @@
 import axios from 'axios'
+import { Credentials } from '../types/userTypes'
+
 const baseURL = import.meta.env.VITE_BACKEND_BASE_URL
 
 export class ApiService {
-  static async signIn({ email, password }: { email: string; password: string }) {
+  static async signIn({ email, password }: Credentials) {
     return axios.request({
       method: 'get',
       baseURL,
@@ -32,11 +34,23 @@ export class ApiService {
     })
   }
 
-  static async getLogs({ email, password }: { email: string; password: string }) {
+  static async getLogs({ email, password }: Credentials) {
     return axios.request({
       method: 'get',
       baseURL,
       url: '/logs',
+      params: {
+        email,
+        password,
+      },
+    })
+  }
+
+  static async getLastQueryTime({ email, password }: Credentials) {
+    return axios.request({
+      method: 'get',
+      baseURL,
+      url: '/users/last-query-time',
       params: {
         email,
         password,
